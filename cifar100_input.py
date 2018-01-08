@@ -22,7 +22,8 @@ def _parse_function_train(image_string, label):
 def _parse_function_eval(image_string, label):
   image_decoded = tf.reshape(image_string, [32, 32, 3])
   image_float   = tf.cast(image_decoded, tf.float32)
-  return image_float, label
+  image_normal  = tf.image.per_image_standardization(image_float) 
+  return image_normal, label
 
 def getTrain(batch_size):
 	labels, images = readTrain()
