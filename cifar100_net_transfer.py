@@ -2,8 +2,8 @@ import tensorflow as tf
 
 def inference(images, dropout_rate):
 	with tf.name_scope("conv_1") as scope:
-		kernels = tf.Variable(tf.truncated_normal([5, 5, 3, 32], stddev=0.01, trainable=False))
-		biases  = tf.Variable(tf.constant(0.1, shape=[32], trainable=False))
+		kernels = tf.Variable(tf.truncated_normal([5, 5, 3, 32], stddev=0.01), trainable=False)
+		biases  = tf.Variable(tf.constant(0.1, shape=[32]), trainable=False)
 		conv   = tf.nn.conv2d(images, kernels, strides=[1,1,1,1], padding='SAME')
 		conv_1 = tf.nn.relu(conv + biases)
 		tf.summary.histogram(scope + "weights", kernels)
@@ -13,8 +13,8 @@ def inference(images, dropout_rate):
 		max_2 = tf.nn.max_pool(conv_1, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
 
 	with tf.name_scope("conv_3") as scope:
-		kernels = tf.Variable(tf.truncated_normal([4, 4, 32, 64], stddev=0.01, trainable=False))
-		biases  = tf.Variable(tf.constant(0.1, shape=[64], trainable=False))
+		kernels = tf.Variable(tf.truncated_normal([4, 4, 32, 64], stddev=0.01), trainable=False)
+		biases  = tf.Variable(tf.constant(0.1, shape=[64]), trainable=False)
 		conv   = tf.nn.conv2d(max_2, kernels, strides=[1,1,1,1], padding='SAME')
 		conv_3 = tf.nn.relu(conv + biases)
 		tf.summary.histogram(scope + "weights", kernels)
@@ -24,24 +24,24 @@ def inference(images, dropout_rate):
 		max_4 = tf.nn.max_pool(conv_3, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
 
 	with tf.name_scope("conv_5") as scope:
-		kernels = tf.Variable(tf.truncated_normal([3, 3, 64, 128], stddev=0.01, trainable=False))
-		biases  = tf.Variable(tf.constant(0.1, shape=[128], trainable=False))
+		kernels = tf.Variable(tf.truncated_normal([3, 3, 64, 128], stddev=0.01), trainable=False)
+		biases  = tf.Variable(tf.constant(0.1, shape=[128]), trainable=False)
 		conv   = tf.nn.conv2d(max_4, kernels, strides=[1,1,1,1], padding='SAME')
 		conv_5 = tf.nn.relu(conv + biases)
 		tf.summary.histogram(scope + "weights", kernels)
 		tf.summary.histogram(scope + "bias", biases)
 
 	with tf.name_scope("conv_6") as scope:
-		kernels = tf.Variable(tf.truncated_normal([3, 3, 128, 128], stddev=0.01, trainable=False))
-		biases  = tf.Variable(tf.constant(0.1, shape=[128], trainable=False))
+		kernels = tf.Variable(tf.truncated_normal([3, 3, 128, 128], stddev=0.01), trainable=False)
+		biases  = tf.Variable(tf.constant(0.1, shape=[128]), trainable=False)
 		conv   = tf.nn.conv2d(conv_5, kernels, strides=[1,1,1,1], padding='SAME')
 		conv_6 = tf.nn.relu(conv + biases)
 		tf.summary.histogram(scope + "weights", kernels)
 		tf.summary.histogram(scope + "bias", biases)
 
 	with tf.name_scope("conv_7") as scope:
-		kernels = tf.Variable(tf.truncated_normal([3, 3, 128, 256], stddev=0.01, trainable=False))
-		biases  = tf.Variable(tf.constant(0.1, shape=[256], trainable=False))
+		kernels = tf.Variable(tf.truncated_normal([3, 3, 128, 256], stddev=0.01), trainable=False)
+		biases  = tf.Variable(tf.constant(0.1, shape=[256]), trainable=False)
 		conv   = tf.nn.conv2d(conv_6, kernels, strides=[1,1,1,1], padding='SAME')
 		conv_7 = tf.nn.relu(conv + biases)
 		tf.summary.histogram(scope + "weights", kernels)

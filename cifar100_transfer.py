@@ -1,6 +1,6 @@
 import tensorflow as tf
 import cifar100_input as _input
-import cifar100_net as net
+import cifar100_net_transfer as net
 
 BATCH_SIZE = 64
 
@@ -32,7 +32,8 @@ summary = tf.summary.merge_all()
 saver  = tf.train.Saver()
 
 with tf.Session() as sess:
-	sess.run(tf.global_variables_initializer())
+	#sess.run(tf.global_variables_initializer())
+	saver.restore(sess, tf.train.latest_checkpoint(".\\checkpoints\\"))
 	sess.run(trainIter.initializer)
 	writer  = tf.summary.FileWriter(".\\summary\\", sess.graph)
 
