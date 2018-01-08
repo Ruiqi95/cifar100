@@ -84,6 +84,11 @@ def predict(logits, labels):
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 	return accuracy
 
+def predictTop5(logits, labels):
+	top_prediction = tf.nn.in_top_k(logits, labels, k=5)
+	accuracy = tf.reduce_mean(tf.cast(top_prediction, tf.float32))
+	return accuracy
+	
 def train(loss, lr, global_step):
 	lr_decay = tf.train.exponential_decay(lr, global_step, 50000, 0.1, staircase=True)
 	optimizer = tf.train.MomentumOptimizer(lr_decay, momentum=0.9)
