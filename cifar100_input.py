@@ -1,14 +1,18 @@
 import tensorflow as tf
 
+RANDOM_SEED = 10
+TRAIN_DIR = "./train"
+TEST_DIR  = "./test"
+
 def readTrain():
 	import pickle
-	with open("train", "rb") as f:
+	with open(TRAIN_DIR, "rb") as f:
 		dataDict = pickle.load(f, encoding="bytes")
 	return dataDict[b'fine_labels'], dataDict[b'data']
 
 def readEval():
 	import pickle
-	with open("test", "rb") as f:
+	with open(TEST_DIR, "rb") as f:
 		dataDict = pickle.load(f, encoding="bytes")
 	return dataDict[b'fine_labels'], dataDict[b'data']
 
@@ -16,7 +20,7 @@ def _parse_function_train(image_string, label):
   image_decoded = tf.reshape(image_string, [32, 32, 3])
   image_float   = tf.cast(image_decoded, tf.float32)
   image_normal  = tf.image.per_image_standardization(image_float) 
-  image_flipped = tf.image.random_flip_left_right(image_normal, seed=10) 
+  image_flipped = tf.image.random_flip_left_right(image_normal, seed=RANDOM_SEED) 
   return image_flipped, label
 
 def _parse_function_eval(image_string, label):
